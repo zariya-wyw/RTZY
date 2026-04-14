@@ -548,6 +548,14 @@
   .product-grid-vertical,
   .product-grid-full {
     grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* Featured grid on homepage - enhanced for luxury look */
+.featured-grid {
+  gap: 24px !important;
+  padding: 20px 0;
+}
     gap: 10px !important;
   }
 }

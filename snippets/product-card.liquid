@@ -1,8 +1,8 @@
 {%- comment -%}
-  Product card — Gucci-inspired minimal design:
-  - Clean full-bleed image
-  - Hover: lift + cycle through all product images with crossfade
-  - Brand name + product title + price
+  Product card — Premium glassmorphic design:
+  - Ultra-luxury glass effect with backdrop blur
+  - Hover: image carousel (cycles through images)
+  - Brand name + product title + price with discount
   - Actions reveal on hover
 {%- endcomment -%}
 <article class="product-card" data-product-card>
@@ -43,7 +43,7 @@
       <span class="price">{{ product.price | money }}</span>
       {% if product.compare_at_price > product.price %}
         {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
-        <span class="discount-badge">{{ discount }}% OFF</span>
+        <span class="discount-badge">{{ discount | round }}% OFF</span>
       {% endif %}
     </div>
     <div class="card-actions">
@@ -52,3 +52,49 @@
     </div>
   </div>
 </article>
+
+<script>
+  (function() {
+    const card = document.currentScript.previousElementSibling;
+    const images = card.querySelectorAll('[data-card-image]');
+    
+    if (images.length <= 1) return;
+    
+    let currentIndex = 0;
+    let carouselInterval = null;
+    
+    function showImage(index) {
+      images.forEach(img => img.classList.remove('is-active'));
+      images[index % images.length].classList.add('is-active');
+      currentIndex = (index + 1) % images.length;
+    }
+    
+    function startCarousel() {
+      if (carouselInterval) clearInterval(carouselInterval);
+      carouselInterval = setInterval(() => {
+        showImage(currentIndex);
+      }, 2000);
+    }
+    
+    function stopCarousel() {
+      if (carouselInterval) {
+        clearInterval(carouselInterval);
+        carouselInterval = null;
+      }
+      images.forEach(img => img.classList.remove('is-active'));
+      images[0].classList.add('is-active');
+      currentIndex = 0;
+    }
+    
+    card.addEventListener('mouseenter', startCarousel);
+    card.addEventListener('mouseleave', stopCarousel);
+    
+    if (window.matchMedia('(hover: touch)').matches) {
+      let touchStartTime = 0;
+      card.addEventListener('touchstart', () => { touchStartTime = Date.now(); });
+      card.addEventListener('touchend', () => {
+        if (Date.now() - touchStartTime < 500) startCarousel();
+      });
+    }
+  })();
+</script>

@@ -1166,17 +1166,25 @@ details[open] .chevron-icon {
   width: 100%;
 }
 
-/* ===== GUCCI-STYLE PRODUCT CARD ===== */
+/* ===== GUCCI-STYLE PRODUCT CARD - ULTRA LUXURY GLASS ===== */
 .product-card {
   overflow: hidden;
-  background: transparent;
-  transition: all 0.5s var(--ease-luxury);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   group: product-card;
+  will-change: transform;
 }
 
 .product-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-12px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+  backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12), 0 12px 24px rgba(201, 169, 98, 0.08);
 }
 
 /* Full-width image with minimal styling */
@@ -1186,7 +1194,8 @@ details[open] .chevron-icon {
   aspect-ratio: 3 / 4;
   overflow: hidden;
   background: var(--bg-soft);
-  margin-bottom: 16px;
+  margin-bottom: 0;
+  border-radius: 16px 16px 0 0;
 }
 
 .product-card-art {
@@ -1220,11 +1229,17 @@ details[open] .chevron-icon {
   object-fit: cover;
   object-position: center;
   z-index: 0;
-  transition: transform 0.7s var(--ease-luxury);
+  transition: transform 0.7s var(--ease-luxury), opacity 0.5s var(--ease-luxury);
+  opacity: 1;
 }
 
-.product-card:hover .product-card-image {
-  transform: scale(1.05);
+.product-card-image:not(.is-active) {
+  opacity: 0;
+  z-index: -1;
+}
+
+.product-card:hover .product-card-image.is-active {
+  transform: scale(1.08);
 }
 
 /* Minimal badge */
@@ -1251,7 +1266,10 @@ details[open] .chevron-icon {
 
 /* Clean product info */
 .product-card-body {
-  padding: 0 4px;
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .vendor {
@@ -1265,7 +1283,7 @@ details[open] .chevron-icon {
 }
 
 .product-title {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-size: 1rem;
   line-height: 1.4;
   font-weight: 400;
@@ -1277,12 +1295,14 @@ details[open] .chevron-icon {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  margin-bottom: auto;
+  min-height: 24px;
 }
 
 .price {
-  font-size: 1rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text);
 }
 
@@ -1290,17 +1310,19 @@ details[open] .chevron-icon {
   color: var(--muted-2);
   text-decoration: line-through;
   font-size: 0.9rem;
+  opacity: 0.7;
 }
 
 .discount-badge {
-  background: var(--gold);
+  background: linear-gradient(135deg, #c9a962, #d4b896);
   color: #fff;
-  border-radius: 0;
-  padding: 4px 8px;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
   font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  font-weight: 500;
+  letter-spacing: 0.08em;
+  font-weight: 600;
   font-family: var(--font-mono);
+  box-shadow: 0 4px 12px rgba(201, 169, 98, 0.3);
 }
 
 .card-actions {
@@ -1308,6 +1330,8 @@ details[open] .chevron-icon {
   opacity: 0;
   transform: translateY(8px);
   transition: all 0.3s var(--ease-luxury);
+  display: flex;
+  gap: 8px;
 }
 
 .product-card:hover .card-actions {
@@ -1316,9 +1340,16 @@ details[open] .chevron-icon {
 }
 
 .card-actions .button {
-  width: 100%;
+  flex: 1;
   min-height: 44px;
   font-size: 0.75rem;
+  transition: all 0.3s var(--ease-luxury);
+  border-radius: 8px;
+}
+
+.card-actions .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(201, 169, 98, 0.2);
 }
 
 /* ===== COLLECTION HERO ===== */
