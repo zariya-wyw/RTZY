@@ -1166,28 +1166,31 @@ details[open] .chevron-icon {
   width: 100%;
 }
 
-/* ===== BLUORANG-INSPIRED MODERN PRODUCT CARD ===== */
+/* ===== GUCCI-STYLE PRODUCT CARD - ULTRA LUXURY GLASS ===== */
 .product-card {
   overflow: hidden;
-  background: var(--bg);
-  transition: all 0.3s var(--ease-luxury);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.04) 100%);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   group: product-card;
+  will-change: transform;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .product-card:hover {
-  border-color: var(--line-strong);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  transform: none;
+  transform: translateY(-12px);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.06) 100%);
+  backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.12), 0 12px 24px rgba(201, 169, 98, 0.08);
 }
 
-/* Full-width image with rounded top corners */
+/* Full-width image with minimal styling */
 .product-card-media {
   display: block;
   position: relative;
@@ -1195,7 +1198,7 @@ details[open] .chevron-icon {
   overflow: hidden;
   background: var(--bg-soft);
   margin-bottom: 0;
-  border-radius: 12px 12px 0 0;
+  border-radius: 16px 16px 0 0;
 }
 
 .product-card-art {
@@ -1211,11 +1214,10 @@ details[open] .chevron-icon {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.02) 100%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.08) 100%);
   z-index: 1;
   opacity: 0;
-  transition: opacity 0.4s ease;
-  pointer-events: none;
+  transition: opacity 0.5s var(--ease-luxury);
 }
 
 .product-card:hover .product-card-art::before {
@@ -1230,11 +1232,17 @@ details[open] .chevron-icon {
   object-fit: cover;
   object-position: center;
   z-index: 0;
-  transition: transform 0.4s ease;
+  transition: transform 0.7s var(--ease-luxury), opacity 0.5s var(--ease-luxury);
+  opacity: 1;
 }
 
-.product-card:hover .product-card-image {
-  transform: scale(1.02);
+.product-card-image:not(.is-active) {
+  opacity: 0;
+  z-index: -1;
+}
+
+.product-card:hover .product-card-image.is-active {
+  transform: scale(1.08);
 }
 
 /* Refined badge */
@@ -1264,32 +1272,29 @@ details[open] .chevron-icon {
 
 /* Refined product info section */
 .product-card-body {
-  padding: 12px 14px;
+  padding: 16px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 4px;
 }
 
 .vendor {
-  margin: 0;
+  margin: 0 0 8px;
   color: var(--muted);
-  letter-spacing: 0.08em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  font-size: 0.58rem;
-  font-weight: 700;
+  font-size: 0.65rem;
+  font-weight: 500;
   font-family: var(--font-mono);
-  display: none;
 }
 
 .product-title {
-  margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.3;
+  margin: 0 0 12px;
+  font-size: 1rem;
+  line-height: 1.4;
   font-weight: 400;
-  font-family: var(--font-body);
+  font-family: var(--font-display);
   color: var(--text);
-  flex: 1;
 }
 
 .product-title a {
@@ -1300,41 +1305,43 @@ details[open] .chevron-icon {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
-  margin: 0;
+  gap: 8px;
+  margin-bottom: auto;
+  min-height: 24px;
 }
 
 .price {
-  font-size: 0.85rem;
-  font-weight: 500;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: var(--text);
 }
 
 .old-price {
   color: var(--muted-2);
   text-decoration: line-through;
-  font-size: 0.75rem;
-  display: none;
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
 }
 
 .discount-badge {
-  background: var(--gold);
+  background: linear-gradient(135deg, #c9a962, #d4b896);
   color: #fff;
-  border-radius: 2px;
-  padding: 4px 8px;
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
+  border-radius: var(--radius-pill);
+  padding: 4px 10px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
   font-weight: 600;
   font-family: var(--font-mono);
-  display: none;
+  box-shadow: 0 4px 12px rgba(201, 169, 98, 0.3);
 }
 
 .card-actions {
-  margin-top: 0;
-  display: none;
+  margin-top: 16px;
+  display: flex;
   gap: 8px;
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(8px);
   transition: all 0.3s var(--ease-luxury);
 }
 
@@ -1345,7 +1352,16 @@ details[open] .chevron-icon {
 
 .card-actions .button {
   flex: 1;
-  min-height: 42px;
+  min-height: 44px;
+  font-size: 0.75rem;
+  transition: all 0.3s var(--ease-luxury);
+  border-radius: 8px;
+}
+
+.card-actions .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(201, 169, 98, 0.2);
+}
   font-size: 0.72rem;
   padding: 0 16px;
 }
