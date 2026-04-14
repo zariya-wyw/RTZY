@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }}{% if page_title != shop.name %} | {{ shop.name }}{% endif %}</title>
+  <meta name="description" content="{{ page_description | default: shop.description }}">
+  
+  <!-- Favicon -->
+  {% if settings.favicon %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.favicon | image_url: width: 32 }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.favicon | image_url: width: 16 }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.favicon | image_url: width: 180 }}">
+  {% elsif settings.logo %}
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ settings.logo | image_url: width: 32 }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ settings.logo | image_url: width: 16 }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ settings.logo | image_url: width: 180 }}">
+  {% else %}
+    <link rel="icon" type="image/svg+xml" href="{{ 'logo.svg' | asset_url }}">
+  {% endif %}
+  
+  {{ content_for_header }}
+  
+  {{ 'zariya-styles.css' | asset_url | stylesheet_tag }}
+  {{ 'zariya-shopify.css' | asset_url | stylesheet_tag }}
+  
+  <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    window.Shopify = window.Shopify || {};
+    window.Shopify.routes = {
+      root: '{{ routes.root_url }}',
+      cart_url: '{{ routes.cart_url }}',
+      cart_add_url: '{{ routes.cart_add_url }}',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      search_url: '{{ routes.search_url }}'
+    };
+    window.Shopify.currency = { active: '{{ cart.currency.iso_code }}' };
+  </script>
+</head>
+<body data-page="{{ request.page_type }}" class="{% if template.name %}template-{{ template.name }}{% endif %}">
+
+  <!-- SPLASH SCREEN -->
+  <div class="splash-screen" id="splash-screen">
+    <span class="splash-text">{{ shop.name | upcase }}</span>
+    {% if settings.logo %}
+      <img class="splash-logo" src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}">
+    {% else %}
+      <img class="splash-logo" src="{{ 'logo.svg' | asset_url }}" alt="{{ shop.name }}">
+    {% endif %}
+    <span class="splash-subtitle">crafted street luxury</span>
+  </div>
+
+  {% section 'header' %}
+
+  <main>
+    {{ content_for_layout }}
+  </main>
+
+  <style>
+    /* Offset main content below fixed header — hero pages handle this themselves */
+    main { padding-top: 110px; }
+    [data-page="index"] main { padding-top: 0; }
+    [data-page="product"] main { padding-top: 0; }
+  </style>
+
+  {% section 'footer' %}
+  {% section 'cart-drawer' %}
+
+  <script src="{{ 'zariya-app.js' | asset_url }}" defer></script>
+  
+  <script>
+    // Splash screen — shows once per session
+    (function() {
+      const splash = document.getElementById('splash-screen');
+      if (!splash) return;
+      if (sessionStorage.getItem('zariya.splash.seen')) {
+        splash.remove();
+        return;
+      }
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        splash.classList.add('fade-out');
+        document.body.style.overflow = '';
+        sessionStorage.setItem('zariya.splash.seen', '1');
+        setTimeout(() => splash.remove(), 700);
+      }, 2200);
+    })();
+  </script>
+</body>
+</html>

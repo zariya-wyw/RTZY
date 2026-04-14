@@ -1,0 +1,64 @@
+{%- comment -%}
+  Hero section - Full-bleed single static image
+  Like Gucci: one massive image, no slideshow, no text overlay
+{%- endcomment -%}
+<section class="hero section hero-static-image">
+  <div class="hero-static-bg" id="hero-static-bg">
+    {% assign has_custom_image = false %}
+    {% for block in section.blocks %}
+      {% if block.settings.image and has_custom_image == false %}
+        {% assign has_custom_image = true %}
+        <img
+          class="hero-static-img"
+          src="{{ block.settings.image | image_url: width: 1920 }}"
+          alt="{{ shop.name | escape }}"
+          loading="eager"
+          fetchpriority="high"
+        >
+      {% endif %}
+    {% endfor %}
+
+    {% unless has_custom_image %}
+      {% for product in collections.all.products limit: 1 %}
+        {% if product.featured_image %}
+          <img
+            class="hero-static-img"
+            src="{{ product.featured_image | image_url: width: 1920 }}"
+            alt="{{ product.title | escape }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {% endif %}
+      {% endfor %}
+    {% endunless %}
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Hero image",
+          "info": "Use a large, high-quality image (1920x1080px or bigger). This will fill the full screen."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
+{% endschema %}

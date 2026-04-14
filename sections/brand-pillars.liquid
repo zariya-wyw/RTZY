@@ -1,0 +1,179 @@
+<section class="section brand-pillars-section">
+  <div class="container">
+    <div class="brand-pillars-header">
+      <p class="eyebrow">The Zariya Promise</p>
+      <div class="brand-pillars-divider"></div>
+    </div>
+    <div class="editorial-grid brand-pillars-grid">
+      {% for block in section.blocks %}
+        <article class="editorial-card brand-pillar-card" {{ block.shopify_attributes }}>
+          <div class="pillar-number">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <p class="eyebrow pillar-eyebrow">{{ block.settings.eyebrow }}</p>
+          <h3>{{ block.settings.heading }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .brand-pillars-section {
+    background: transparent;
+  }
+
+  .brand-pillars-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .brand-pillars-header .eyebrow {
+    margin-bottom: 20px;
+    color: var(--gold);
+  }
+
+  .brand-pillars-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto;
+  }
+
+  .brand-pillars-grid {
+    gap: 2px;
+  }
+
+  .brand-pillar-card {
+    position: relative;
+    padding: 48px 36px;
+    background: var(--bg);
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    transition: all 0.5s var(--ease-luxury);
+  }
+
+  .brand-pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold);
+    transition: width 0.6s var(--ease-luxury);
+  }
+
+  .brand-pillar-card:hover::before {
+    width: 100%;
+  }
+
+  .brand-pillar-card:hover {
+    transform: none !important;
+    box-shadow: none;
+  }
+
+  .pillar-number {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--line-strong);
+    line-height: 1;
+    margin-bottom: 24px;
+    opacity: 0.3;
+  }
+
+  .pillar-eyebrow {
+    color: var(--gold) !important;
+    margin-bottom: 12px !important;
+  }
+
+  .brand-pillar-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    line-height: 1.15;
+    font-weight: 500;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+
+  .brand-pillar-card p:last-child {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.92rem;
+  }
+
+  @media (max-width: 768px) {
+    .brand-pillars-grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .brand-pillar-card {
+      padding: 36px 28px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Brand Pillars",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "pillar",
+      "name": "Pillar",
+      "settings": [
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow text",
+          "default": "Quality assurance"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our promise of excellence."
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Every Zariya piece is crafted with uncompromising attention to detail — premium materials, precise craftsmanship, and refined design."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Pillars",
+      "blocks": [
+        {
+          "type": "pillar",
+          "settings": {
+            "eyebrow": "Quality assurance",
+            "heading": "Our promise of excellence.",
+            "text": "Every Zariya piece is crafted with uncompromising attention to detail — premium materials, precise craftsmanship, and refined design."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "eyebrow": "Construction",
+            "heading": "Heavyweight & tactile.",
+            "text": "240 GSM cotton fleece, structured silhouettes, and defined shoulders. Built to hold shape and feel luxury across the day."
+          }
+        },
+        {
+          "type": "pillar",
+          "settings": {
+            "eyebrow": "Trust",
+            "heading": "Built on trust. Defined by craft.",
+            "text": "Consistency, quality, and customer trust. Trusted by customers who value authenticity and durability in every piece."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

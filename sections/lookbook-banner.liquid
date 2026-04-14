@@ -1,0 +1,435 @@
+<section class="section lookbook-banner" id="lookbook">
+  <div class="container">
+    <!-- Gucci-style editorial split layout -->
+    <div class="lookbook-grid">
+      <div class="lookbook-text">
+        <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+        <h2 class="lookbook-heading">{{ section.settings.heading }}</h2>
+        <p class="lookbook-desc">{{ section.settings.description }}</p>
+        <div class="lookbook-stats">
+          <div class="lookbook-stat">
+            <strong class="gsm-animated-value" data-gsm-values="240,320,430">240 GSM</strong>
+            <span>{{ section.settings.stat_1_label }}</span>
+          </div>
+          <div class="lookbook-stat">
+            <strong>{{ section.settings.stat_2_value }}</strong>
+            <span>{{ section.settings.stat_2_label }}</span>
+          </div>
+          <div class="lookbook-stat">
+            <strong>{{ section.settings.stat_3_value }}</strong>
+            <span>{{ section.settings.stat_3_label }}</span>
+          </div>
+        </div>
+        {% if section.settings.cta_text != blank %}
+          <a class="button button-solid lookbook-cta" href="{{ section.settings.cta_link | default: '/collections/all' }}">{{ section.settings.cta_text }}</a>
+        {% endif %}
+      </div>
+      <div class="lookbook-visual">
+        <div class="lookbook-card lookbook-card-main">
+          <div class="lookbook-card-inner">
+            <p class="eyebrow">{{ section.settings.card_eyebrow }}</p>
+            <h3>{{ section.settings.card_heading }}</h3>
+            <p>{{ section.settings.card_text }}</p>
+          </div>
+          <div class="lookbook-card-accent-line"></div>
+        </div>
+        <div class="lookbook-card lookbook-card-quote">
+          <span class="lookbook-quote-mark">"</span>
+          <p class="lookbook-quote-text">{{ section.settings.quote_text }}</p>
+          <span class="lookbook-author">— {{ section.settings.quote_author }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ===== GUCCI-STYLE LOOKBOOK BANNER ===== */
+  .lookbook-banner {
+    background: transparent;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lookbook-banner::before {
+    content: '';
+    position: absolute;
+    top: -30%;
+    right: -10%;
+    width: 60%;
+    height: 160%;
+    background: radial-gradient(ellipse at center, rgba(201, 169, 98, 0.04), transparent 70%);
+    pointer-events: none;
+  }
+
+  .lookbook-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .lookbook-heading {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    line-height: 1.05;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+    color: var(--text);
+  }
+
+  .lookbook-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+    margin: 0 0 40px;
+    max-width: 52ch;
+  }
+
+  .lookbook-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .lookbook-stat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .lookbook-stat span {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  .lookbook-cta {
+    margin-top: 8px;
+  }
+
+  /* Visual cards */
+  .lookbook-visual {
+    display: grid;
+    gap: 20px;
+  }
+
+  .lookbook-card {
+    padding: 40px;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .lookbook-card-main {
+    position: relative;
+  }
+
+  .lookbook-card-main::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--gold);
+  }
+
+  .lookbook-card-inner {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lookbook-card-main h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    line-height: 1.1;
+    font-weight: 500;
+    margin: 0 0 16px;
+    color: var(--text);
+  }
+
+  .lookbook-card-main p {
+    color: var(--muted);
+    line-height: 1.7;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .lookbook-card-main .eyebrow {
+    margin-bottom: 16px;
+    color: var(--gold);
+  }
+
+  .lookbook-card-accent-line {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light));
+  }
+
+  /* Quote card */
+  .lookbook-card-quote {
+    background: #0a0a0a;
+    color: #fff;
+    padding: 40px;
+    position: relative;
+  }
+
+  .lookbook-quote-mark {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 0.5;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.6;
+  }
+
+  .lookbook-quote-text {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 20px;
+  }
+
+  .lookbook-author {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  /* GSM Animation */
+  .gsm-animated-value {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .gsm-animated-value .gsm-number {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .gsm-animated-value .gsm-number.fade-out {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  .gsm-animated-value .gsm-number.fade-in {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .gsm-animated-value .gsm-number.active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .lookbook-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .lookbook-stats {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .lookbook-card {
+      padding: 28px;
+    }
+
+    .lookbook-heading {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .lookbook-stats {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .lookbook-stat {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const gsmElement = document.querySelector('.gsm-animated-value');
+    if (!gsmElement) return;
+
+    const gsmValues = [240, 320, 430];
+    let currentIndex = 0;
+
+    gsmElement.innerHTML = '<span class="gsm-number active">' + gsmValues[0] + ' GSM</span>';
+
+    function animateGSM() {
+      const currentSpan = gsmElement.querySelector('.gsm-number');
+
+      currentSpan.classList.remove('active');
+      currentSpan.classList.add('fade-out');
+
+      currentIndex = (currentIndex + 1) % gsmValues.length;
+
+      setTimeout(() => {
+        const newSpan = document.createElement('span');
+        newSpan.className = 'gsm-number fade-in';
+        newSpan.textContent = gsmValues[currentIndex] + ' GSM';
+        gsmElement.innerHTML = '';
+        gsmElement.appendChild(newSpan);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            newSpan.classList.remove('fade-in');
+            newSpan.classList.add('active');
+          });
+        });
+      }, 250);
+    }
+
+    setInterval(animateGSM, 2500);
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Lookbook Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Why Zariya"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Not fast fashion. Built to last."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Every piece is cut from 240 GSM premium cotton, double-stitched at stress points, and designed to hold its shape through hundreds of washes. We don't chase trends — we build wardrobe anchors."
+    },
+    {
+      "type": "text",
+      "id": "stat_1_value",
+      "label": "Stat 1 value",
+      "default": "240 GSM"
+    },
+    {
+      "type": "text",
+      "id": "stat_1_label",
+      "label": "Stat 1 label",
+      "default": "Premium cotton"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_value",
+      "label": "Stat 2 value",
+      "default": "Limited"
+    },
+    {
+      "type": "text",
+      "id": "stat_2_label",
+      "label": "Stat 2 label",
+      "default": "Edition drops"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_value",
+      "label": "Stat 3 value",
+      "default": "24-48h"
+    },
+    {
+      "type": "text",
+      "id": "stat_3_label",
+      "label": "Stat 3 label",
+      "default": "Dispatch time"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Explore the collection"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link"
+    },
+    {
+      "type": "text",
+      "id": "card_eyebrow",
+      "label": "Card eyebrow",
+      "default": "Craftsmanship"
+    },
+    {
+      "type": "text",
+      "id": "card_heading",
+      "label": "Card heading",
+      "default": "Made to move with you."
+    },
+    {
+      "type": "textarea",
+      "id": "card_text",
+      "label": "Card text",
+      "default": "From structured shoulders to drop-cut hems — every silhouette is designed for comfort without compromising on form."
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote text",
+      "default": "Zariya pieces feel like they were made just for me. The weight, the fit, the detailing — nothing else compares at this price."
+    },
+    {
+      "type": "text",
+      "id": "quote_author",
+      "label": "Quote author",
+      "default": "A Zariya customer"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Lookbook Banner"
+    }
+  ]
+}
+{% endschema %}

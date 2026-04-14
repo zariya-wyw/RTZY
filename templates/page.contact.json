@@ -1,0 +1,49 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "contact-page",
+      "settings": {},
+      "blocks": {
+        "faq1": {
+          "type": "faq",
+          "settings": {
+            "question": "How do I track my order?",
+            "answer": "Once your order is dispatched, you'll receive a tracking link via email and WhatsApp. You can also reach out to our support team anytime for a status update."
+          }
+        },
+        "faq2": {
+          "type": "faq",
+          "settings": {
+            "question": "Can I change my size after ordering?",
+            "answer": "Yes — contact us within 12 hours of placing your order and we'll arrange a size swap at no extra cost. Reach out via WhatsApp for the fastest response."
+          }
+        },
+        "faq3": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We accept returns and exchanges within 7 days of delivery for unworn items in original packaging. Refunds are processed within 5-7 business days after we receive the item."
+          }
+        },
+        "faq4": {
+          "type": "faq",
+          "settings": {
+            "question": "What payment methods do you accept?",
+            "answer": "We accept all major credit/debit cards, UPI, net banking, and popular wallets. Cash on delivery is also available for select locations across India."
+          }
+        }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4"]
+    }
+  },
+  "order": ["main"]
+}

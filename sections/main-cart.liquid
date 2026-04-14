@@ -1,0 +1,77 @@
+<section class="section">
+  <div class="container">
+    <div class="cart-page">
+      <div class="cart-header">
+        <h1>Your Cart</h1>
+        <p class="eyebrow">{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}</p>
+      </div>
+
+      {% if cart.item_count > 0 %}
+        <form action="{{ routes.cart_url }}" method="post" id="cart-form">
+          <div class="cart-items">
+            {% for item in cart.items %}
+              <div class="cart-line-item" data-line="{{ forloop.index }}">
+                <div class="cart-line-image">
+                  {% if item.image %}
+                    <a href="{{ item.url }}">
+                      <img src="{{ item.image | image_url: width: 200 }}" alt="{{ item.title }}">
+                    </a>
+                  {% endif %}
+                </div>
+                <div class="cart-line-details">
+                  <h3><a href="{{ item.url }}">{{ item.product.title }}</a></h3>
+                  {% unless item.variant.title == 'Default Title' %}
+                    <p class="cart-line-variant">{{ item.variant.title }}</p>
+                  {% endunless %}
+                  <p class="cart-line-price">{{ item.original_line_price | money }}</p>
+                  {% if item.original_line_price != item.final_line_price %}
+                    <p class="cart-line-discount">{{ item.final_line_price | money }}</p>
+                  {% endif %}
+                </div>
+                <div class="cart-line-quantity">
+                  <div class="quantity-control">
+                    <button type="button" data-action="decrease-line" data-line="{{ forloop.index }}">-</button>
+                    <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-line="{{ forloop.index }}">
+                    <button type="button" data-action="increase-line" data-line="{{ forloop.index }}">+</button>
+                  </div>
+                  <button type="button" class="cart-line-remove" data-action="remove-line" data-line="{{ forloop.index }}">Remove</button>
+                </div>
+                <div class="cart-line-total">
+                  <strong>{{ item.final_line_price | money }}</strong>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="cart-footer">
+            <div class="cart-note">
+              <label for="cart-note" class="eyebrow">Order notes</label>
+              <textarea name="note" id="cart-note" placeholder="Add any special instructions...">{{ cart.note }}</textarea>
+            </div>
+            <div class="cart-totals">
+              <div class="cart-subtotal-row">
+                <span>Subtotal</span>
+                <strong>{{ cart.total_price | money }}</strong>
+              </div>
+              <p class="cart-shipping-note">Shipping & taxes calculated at checkout</p>
+              <button type="submit" name="update" class="button button-ghost">Update Cart</button>
+              <button type="submit" name="checkout" class="button button-solid">Checkout</button>
+            </div>
+          </div>
+        </form>
+      {% else %}
+        <div class="cart-empty-page">
+          <p>Your cart is currently empty.</p>
+          <a href="{{ routes.collections_url }}" class="button button-solid">Continue Shopping</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": []
+}
+{% endschema %}

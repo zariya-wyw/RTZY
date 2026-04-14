@@ -1,0 +1,315 @@
+<footer class="site-footer">
+  <div class="container">
+    <!-- Gucci-style large centered logo -->
+    <div class="footer-brand">
+      {% if section.settings.logo %}
+        <img class="footer-brand-logo" src="{{ section.settings.logo | image_url: width: 120 }}" alt="{{ shop.name }}">
+      {% endif %}
+      <span class="footer-brand-name">{{ shop.name | upcase }}</span>
+      <span class="footer-brand-tagline">crafted street luxury</span>
+    </div>
+
+    <!-- Footer grid content -->
+    <div class="footer-grid">
+      <div class="footer-col">
+        <p class="footer-col-title">About</p>
+        <p class="footer-copy">{{ section.settings.footer_text }}</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Quick Links</p>
+        <nav class="footer-links">
+          {% for link in linklists[section.settings.footer_menu].links %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+          {% endfor %}
+        </nav>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Connect</p>
+        <div class="footer-social-icons">
+          {% if section.settings.email %}
+            <a href="mailto:{{ section.settings.email }}" class="footer-icon-link" aria-label="Email" title="Email us">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <path d="M22 4l-10 8L2 4"></path>
+              </svg>
+            </a>
+          {% endif %}
+          <a href="{{ section.settings.instagram | default: 'https://www.instagram.com/zariya.wear?igsh=MWEwaTNlbGVyZXU4bw==' }}" target="_blank" rel="noreferrer" class="footer-icon-link" aria-label="Instagram" title="Follow on Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5"></rect>
+              <circle cx="12" cy="12" r="5"></circle>
+              <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"></circle>
+            </svg>
+          </a>
+          {% if section.settings.whatsapp %}
+            <a href="https://wa.me/{{ section.settings.whatsapp }}" target="_blank" rel="noreferrer" class="footer-icon-link" aria-label="WhatsApp" title="Chat on WhatsApp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+        {% if section.settings.email %}
+          <a href="mailto:{{ section.settings.email }}" class="footer-email-link">{{ section.settings.email }}</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="/policies/privacy-policy">Privacy</a>
+        <a href="/policies/terms-of-service">Terms</a>
+        <a href="/policies/shipping-policy">Shipping</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  /* ===== GUCCI-INSPIRED FOOTER ===== */
+  .site-footer {
+    background: #0a0a0a;
+    color: #fff;
+    border-top: none;
+  }
+
+  /* Large centered brand mark */
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 80px 0 60px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .footer-brand-logo {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    opacity: 0.9;
+    filter: brightness(10);
+  }
+
+  .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: 0.35em;
+    font-weight: 400;
+    color: #fff;
+  }
+
+  .footer-brand-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-family: var(--font-mono);
+    font-weight: 500;
+  }
+
+  /* Footer grid */
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr 0.8fr;
+    gap: 60px;
+    padding: 60px 0;
+  }
+
+  .footer-col-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    margin: 0 0 20px;
+  }
+
+  .footer-copy {
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.8;
+    font-size: 0.9rem;
+    margin: 0;
+    max-width: 36ch;
+  }
+
+  .footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .footer-links a {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s var(--ease-luxury);
+    position: relative;
+    display: inline-block;
+  }
+
+  .footer-links a:hover {
+    color: #fff;
+  }
+
+  .footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s var(--ease-luxury);
+  }
+
+  .footer-links a:hover::after {
+    width: 100%;
+  }
+
+  /* Social icons */
+  .footer-social-icons {
+    display: flex;
+    gap: 12px;
+    margin-top: 0;
+  }
+
+  .footer-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s var(--ease-luxury);
+    background: transparent;
+  }
+
+  .footer-icon-link:hover {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+
+  .footer-email-link {
+    display: block;
+    margin-top: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  .footer-email-link:hover {
+    color: var(--gold-light);
+    text-decoration-color: var(--gold-light);
+  }
+
+  /* Bottom bar */
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 24px 0;
+    margin-top: 0;
+  }
+
+  .footer-bottom-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-bottom p {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    margin: 0;
+    letter-spacing: 0.05em;
+  }
+
+  .footer-bottom-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-bottom-links a {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.3s ease;
+  }
+
+  .footer-bottom-links a:hover {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      padding: 40px 0;
+    }
+
+    .footer-brand {
+      padding: 60px 0 40px;
+    }
+
+    .footer-bottom-inner {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Footer logo"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer description",
+      "default": "Luxury streetwear with an editorial edge. Crafted in India, designed for the world."
+    },
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Footer menu",
+      "default": "footer"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email",
+      "default": "zariya.wyw@gmail.com"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp",
+      "label": "WhatsApp number (with country code)",
+      "default": "916399008999"
+    },
+    {
+      "type": "url",
+      "id": "instagram",
+      "label": "Instagram URL"
+    }
+  ]
+}
+{% endschema %}

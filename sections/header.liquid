@@ -1,0 +1,156 @@
+<header class="site-header" id="site-header">
+  <div class="announcement-bar">
+    <div class="marquee-track">
+      {% for i in (1..3) %}
+        <span>{{ section.settings.announcement_1 }}</span>
+        <span>★</span>
+        <span>{{ section.settings.announcement_2 }}</span>
+        <span>★</span>
+        <span>{{ section.settings.announcement_3 }}</span>
+        <span>★</span>
+        <span>{{ section.settings.announcement_4 }}</span>
+        <span>★</span>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="container header-row">
+    <div class="mobile-menu-group">
+      <button class="menu-toggle" type="button" data-action="menu" aria-label="Menu">
+        <svg class="icon-menu" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+        <span class="btn-text">Menu</span>
+      </button>
+      <a class="mobile-logo-inline" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+        {% if section.settings.logo %}
+          <img class="mobile-logo-img" src="{{ section.settings.logo | image_url: width: 60 }}" alt="">
+        {% else %}
+          <img class="mobile-logo-img" src="{{ 'logo.svg' | asset_url }}" alt="">
+        {% endif %}
+        <span class="mobile-logo-name">{{ shop.name | upcase }}</span>
+      </a>
+    </div>
+    <a class="logo logo-inline" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+      <span class="logo-mark" aria-hidden="true">
+        {% if section.settings.logo %}
+          <img class="logo-monogram" src="{{ section.settings.logo | image_url: width: 100 }}" alt="">
+        {% else %}
+          <img class="logo-monogram" src="{{ 'logo.svg' | asset_url }}" alt="">
+        {% endif %}
+      </span>
+      <span class="logo-title">{{ shop.name | upcase }}</span>
+    </a>
+    <nav class="main-nav">
+      {% for link in linklists[section.settings.menu].links %}
+        {% assign link_handle = link.title | downcase %}
+        {% if link_handle == 'collections' or link_handle == 'collection' %}
+          <div class="nav-dropdown" data-nav-dropdown>
+            <a {% if link.active %}class="active"{% endif %} href="{{ link.url }}">{{ link.title }}</a>
+            <div class="nav-dropdown-menu">
+              {% for collection in collections %}
+                <a href="{{ collection.url }}">{{ collection.title }}</a>
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <a {% if link.active %}class="active"{% endif %} href="{{ link.url }}">{{ link.title }}</a>
+        {% endif %}
+      {% endfor %}
+    </nav>
+    <div class="header-actions">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" aria-label="Account">
+          <svg class="icon-account" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span class="btn-text">Account</span>
+        </a>
+      {% endif %}
+      <button type="button" data-action="cart" aria-label="Cart">
+        <svg class="icon-cart" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <path d="M16 10a4 4 0 0 1-8 0"></path>
+        </svg>
+        <span class="btn-text">Cart</span>
+        <span class="cart-count" data-cart-count>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu drawer -->
+<div class="mobile-menu-drawer" id="mobile-menu-drawer">
+  <div class="mobile-menu-header">
+    <span class="logo-title">{{ shop.name | upcase }}</span>
+    <button type="button" data-action="close-menu">&times;</button>
+  </div>
+  <nav class="mobile-nav">
+    {% for link in linklists[section.settings.menu].links %}
+      {% assign link_handle = link.title | downcase %}
+      {% if link_handle == 'collections' or link_handle == 'collection' %}
+        <div class="mobile-nav-dropdown">
+          <button type="button" class="mobile-nav-dropdown-toggle" data-action="toggle-dropdown">
+            {{ link.title }}
+            <svg class="mobile-nav-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+          <div class="mobile-nav-subnav">
+            {% for collection in collections %}
+              <a href="{{ collection.url }}">{{ collection.title }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      {% else %}
+        <a {% if link.active %}class="active"{% endif %} href="{{ link.url }}">{{ link.title }}</a>
+      {% endif %}
+    {% endfor %}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "announcement_1",
+      "label": "Announcement 1",
+      "default": "FREE CUSTOMIZATIONS"
+    },
+    {
+      "type": "text",
+      "id": "announcement_2",
+      "label": "Announcement 2",
+      "default": "CRAFTED IN INDIA"
+    },
+    {
+      "type": "text",
+      "id": "announcement_3",
+      "label": "Announcement 3",
+      "default": "24-48 HOUR DISPATCH"
+    },
+    {
+      "type": "text",
+      "id": "announcement_4",
+      "label": "Announcement 4",
+      "default": "FREE CUSTOMIZATIONS"
+    }
+  ]
+}
+{% endschema %}

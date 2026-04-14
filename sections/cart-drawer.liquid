@@ -1,0 +1,61 @@
+<!-- Cart Drawer -->
+<div class="cart-drawer" id="cart-drawer">
+  <div class="cart-drawer-overlay" data-action="close-cart"></div>
+  <div class="cart-drawer-content">
+    <div class="cart-drawer-header">
+      <h3>Your Cart</h3>
+      <button type="button" data-action="close-cart">&times;</button>
+    </div>
+    
+    <div class="cart-drawer-items" id="cart-drawer-items">
+      {% if cart.item_count > 0 %}
+        {% for item in cart.items %}
+          <div class="cart-item" data-line="{{ forloop.index }}">
+            <div class="cart-item-image">
+              {% if item.image %}
+                <img src="{{ item.image | image_url: width: 120 }}" alt="{{ item.title }}">
+              {% endif %}
+            </div>
+            <div class="cart-item-details">
+              <h4>{{ item.product.title }}</h4>
+              {% unless item.variant.title == 'Default Title' %}
+                <p class="cart-item-variant">{{ item.variant.title }}</p>
+              {% endunless %}
+              <p class="cart-item-price">{{ item.final_line_price | money }}</p>
+              <div class="cart-item-quantity">
+                <button type="button" data-action="decrease-qty" data-line="{{ forloop.index }}">-</button>
+                <span>{{ item.quantity }}</span>
+                <button type="button" data-action="increase-qty" data-line="{{ forloop.index }}">+</button>
+              </div>
+            </div>
+            <button type="button" class="cart-item-remove" data-action="remove-item" data-line="{{ forloop.index }}">&times;</button>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="cart-empty">
+          <p>Your cart is empty</p>
+          <a href="{{ routes.collections_url }}" class="button button-solid">Shop Now</a>
+        </div>
+      {% endif %}
+    </div>
+    
+    {% if cart.item_count > 0 %}
+      <div class="cart-drawer-footer">
+        <div class="cart-subtotal">
+          <span>Subtotal</span>
+          <strong id="cart-subtotal">{{ cart.total_price | money }}</strong>
+        </div>
+        <p class="cart-note">Shipping & taxes calculated at checkout</p>
+        <a href="{{ routes.cart_url }}" class="button button-ghost">View Cart</a>
+        <a href="/checkout" class="button button-solid">Checkout</a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

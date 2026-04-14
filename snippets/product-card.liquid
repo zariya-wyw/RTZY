@@ -1,0 +1,54 @@
+{%- comment -%}
+  Product card — Gucci-inspired minimal design:
+  - Clean full-bleed image
+  - Hover: lift + cycle through all product images with crossfade
+  - Brand name + product title + price
+  - Actions reveal on hover
+{%- endcomment -%}
+<article class="product-card" data-product-card>
+  <a class="product-card-media" href="{{ product.url }}">
+    {% if product.compare_at_price > product.price %}
+      <div class="product-card-badge sale">SALE</div>
+    {% elsif product.tags contains 'new' %}
+      <div class="product-card-badge">NEW</div>
+    {% endif %}
+    <div class="product-card-art">
+      {% for image in product.images %}
+        <img 
+          class="product-card-image{% if forloop.first %} is-active{% endif %}" 
+          src="{{ image | image_url: width: 900 }}" 
+          alt="{{ image.alt | default: product.title }}"
+          loading="lazy"
+          decoding="async"
+          data-card-image
+          data-index="{{ forloop.index0 }}"
+        >
+      {% endfor %}
+      {% if product.images.size == 0 %}
+        <div class="product-card-placeholder">
+          <span>ZARIYA</span>
+        </div>
+      {% endif %}
+    </div>
+  </a>
+  <div class="product-card-body">
+    <p class="vendor">{{ product.vendor | default: 'ZARIYA' }}</p>
+    <h3 class="product-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+    <div class="price-row">
+      {% if product.compare_at_price > product.price %}
+        <span class="old-price">{{ product.compare_at_price | money }}</span>
+      {% endif %}
+      <span class="price">{{ product.price | money }}</span>
+      {% if product.compare_at_price > product.price %}
+        {% assign discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+        <span class="discount-badge">{{ discount }}% OFF</span>
+      {% endif %}
+    </div>
+    <div class="card-actions">
+      <a class="button" href="{{ product.url }}">View</a>
+      <button class="button button-solid" type="button" data-action="quick-add" data-product-id="{{ product.variants.first.id }}">Add to Bag</button>
+    </div>
+  </div>
+</article>

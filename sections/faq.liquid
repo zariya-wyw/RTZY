@@ -1,0 +1,121 @@
+<section class="section faq-section-open">
+  <div class="container">
+    <div class="faq-list reveal">
+      {% for block in section.blocks %}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <h3 class="faq-question">{{ block.settings.question }}</h3>
+          <p class="faq-answer">{{ block.settings.answer }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-section-open .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .faq-section-open .faq-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--color-border, #e5e5e5);
+  }
+  
+  .faq-section-open .faq-item:last-child {
+    border-bottom: none;
+  }
+  
+  .faq-section-open .faq-question {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.75rem;
+    color: var(--accent);
+  }
+  
+  .faq-section-open .faq-answer {
+    color: var(--color-text-muted, #666);
+    line-height: 1.7;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "support_eyebrow",
+      "label": "Support eyebrow",
+      "default": "Quick questions"
+    },
+    {
+      "type": "text",
+      "id": "support_heading",
+      "label": "Support heading",
+      "default": "Everything you need."
+    },
+    {
+      "type": "textarea",
+      "id": "support_text",
+      "label": "Support text",
+      "default": "Browse the line, place an order, or reach out for sizing help and order support."
+    },
+    {
+      "type": "url",
+      "id": "support_link",
+      "label": "Support link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "How fast do you ship?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "Most orders are prepared within 24-48 hours and dispatched with tracking."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Section",
+      "blocks": [
+        {
+          "type": "faq",
+          "settings": {
+            "question": "How fast do you ship?",
+            "answer": "Most orders are prepared within 24-48 hours and dispatched with tracking."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "Can I exchange sizes?",
+            "answer": "Yes. Reach out via WhatsApp or email and we'll sort it quickly."
+          }
+        },
+        {
+          "type": "faq",
+          "settings": {
+            "question": "What areas do you deliver to?",
+            "answer": "We deliver across India. International shipping is available on request — reach out to our support team for details."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

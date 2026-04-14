@@ -1,0 +1,47 @@
+<section class="marquee section-tight" aria-label="Brand highlights">
+  <div class="marquee-track marquee-track-dark">
+    {% for i in (1..2) %}
+      <span>{{ section.settings.text_1 }}</span>
+      <span>{{ section.settings.text_2 }}</span>
+      <span>{{ section.settings.text_3 }}</span>
+      <span>{{ section.settings.text_4 }}</span>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Marquee Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text_1",
+      "label": "Text 1",
+      "default": "LIMITED QUANTITIES"
+    },
+    {
+      "type": "text",
+      "id": "text_2",
+      "label": "Text 2",
+      "default": "EDITORIAL FIT"
+    },
+    {
+      "type": "text",
+      "id": "text_3",
+      "label": "Text 3",
+      "default": "FAST SUPPORT"
+    },
+    {
+      "type": "text",
+      "id": "text_4",
+      "label": "Text 4",
+      "default": "FREE EXCHANGES"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Marquee Banner"
+    }
+  ]
+}
+{% endschema %}

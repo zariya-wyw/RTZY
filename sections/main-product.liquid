@@ -1,0 +1,235 @@
+{% comment %} Product Video Hero — full-viewport, autoplay, muted, loop {% endcomment %}
+{% assign video_url = product.metafields.custom.product_video | default: section.settings.product_video_url %}
+{% if video_url != blank %}
+<section class="product-video-hero">
+  <video class="product-video" autoplay muted loop playsinline>
+    <source src="{{ video_url }}" type="video/mp4">
+  </video>
+  <div class="product-video-overlay">
+    <div class="container">
+      <p class="eyebrow">{{ product.vendor }}</p>
+      <h1 class="product-video-title">{{ product.title }}</h1>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="section product-hero">
+  <div class="container product-layout">
+    <div class="product-gallery reveal">
+      <div class="product-gallery-vertical">
+        {% for image in product.images %}
+          <div class="product-gallery-image">
+            <img src="{{ image | image_url: width: 800 }}" alt="{{ image.alt | default: product.title }}">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <article class="product-summary reveal">
+      <p class="eyebrow" id="product-vendor">{{ product.vendor }}</p>
+      <h1 id="product-title">{{ product.title }}</h1>
+      <div class="price-row">
+        {% if product.compare_at_price > product.price %}
+          <span class="old-price">{{ product.compare_at_price | money }}</span>
+        {% endif %}
+        <span class="price" id="product-price">{{ product.price | money }}</span>
+        {% if product.compare_at_price > product.price %}
+          <span class="badge sale-badge">Sale</span>
+        {% endif %}
+      </div>
+      <p class="product-copy">{{ product.description }}</p>
+
+      <div class="meta-grid">
+        <div><span>Category</span><strong>{{ product.type | default: '-' }}</strong></div>
+        <div><span>Fit</span><strong>{{ product.metafields.custom.fit | default: 'Regular' }}</strong></div>
+        <div><span>Dispatch</span><strong>24-48 hrs</strong></div>
+        <div><span>Brand</span><strong>{{ product.vendor }}</strong></div>
+      </div>
+
+      {% form 'product', product %}
+        {% if product.has_only_default_variant %}
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        {% else %}
+          {% for option in product.options_with_values %}
+            <div class="variant-option">
+              <p class="eyebrow">{{ option.name }}</p>
+              <div class="size-options">
+                {% for value in option.values %}
+                  <label class="size-option">
+                    <input type="radio" name="option-{{ option.name | handle }}" value="{{ value }}" {% if forloop.first %}checked{% endif %} data-option-position="{{ option.position }}">
+                    <span>{{ value }}</span>
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+          {% endfor %}
+          <select name="id" id="variant-select" class="visually-hidden">
+            {% for variant in product.variants %}
+              <option value="{{ variant.id }}" {% if variant == product.selected_or_first_available_variant %}selected{% endif %} data-price="{{ variant.price | money }}" data-compare="{{ variant.compare_at_price | money }}" data-available="{{ variant.available }}">
+                {{ variant.title }}
+              </option>
+            {% endfor %}
+          </select>
+        {% endif %}
+
+        {% comment %} ✦ Customize Button & Panel {% endcomment %}
+        <div class="customize-section">
+          <button type="button" class="customize-toggle" data-action="toggle-customize">
+            <span class="customize-icon">✦</span> Customize
+          </button>
+          <div class="customize-panel" id="customize-panel">
+            <label class="customize-label eyebrow" for="customization-note">Your customization</label>
+            <textarea 
+              name="properties[Customization Note]" 
+              id="customization-note" 
+              class="customize-textarea" 
+              placeholder="Tell us your customization… (e.g., add initials, change color, custom text)"
+              rows="3"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="quantity-row">
+          <p class="eyebrow">Quantity</p>
+          <div class="quantity-control">
+            <button type="button" class="qty-btn" data-action="quantity-minus" aria-label="Decrease quantity">
+              <span>−</span>
+            </button>
+            <input type="number" name="quantity" value="1" min="1" id="quantity-input">
+            <button type="button" class="qty-btn" data-action="quantity-plus" aria-label="Increase quantity">
+              <span>+</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="action-row">
+          <button class="button button-solid" type="submit" {% unless product.available %}disabled{% endunless %}>
+            {% if product.available %}Add to cart{% else %}Sold out{% endif %}
+          </button>
+          {% if product.available %}
+            <button class="button button-ghost" type="button" data-action="buy-now">Buy now</button>
+          {% endif %}
+        </div>
+      {% endform %}
+
+      <div class="product-details">
+        <details open>
+          <summary>
+            Product notes
+            <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <p>{{ product.metafields.custom.notes | default: product.description | truncate: 200 }}</p>
+        </details>
+        <details>
+          <summary>
+            Shipping
+            <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <p>Orders are dispatched within 24-48 hours with full tracking. Free standard shipping across India.</p>
+        </details>
+        <details>
+          <summary>
+            Care
+            <svg class="chevron-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </summary>
+          <p>Wash cold, dry flat, and avoid high heat to preserve the finish and print integrity.</p>
+        </details>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container section-head">
+    <div>
+      <p class="eyebrow">You may also like</p>
+      <h2>Related pieces</h2>
+    </div>
+    <a class="text-link" href="{{ collection.url | default: routes.collections_url }}">Back to collection</a>
+  </div>
+  <div class="container">
+    <div class="product-grid-vertical">
+      {% for related_product in product.collections.first.products limit: 4 %}
+        {% if related_product.id != product.id %}
+          {% render 'product-card', product: related_product %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Gallery thumbnail click
+    const thumbs = document.querySelectorAll('.gallery-thumb');
+    const mainImage = document.getElementById('main-product-image');
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        thumbs.forEach(t => t.classList.remove('is-active'));
+        this.classList.add('is-active');
+        if (mainImage) {
+          mainImage.src = this.dataset.imageUrl;
+        }
+      });
+    });
+
+    // Variant selection
+    const optionInputs = document.querySelectorAll('[data-option-position]');
+    const variantSelect = document.getElementById('variant-select');
+    
+    function updateVariant() {
+      if (!variantSelect) return;
+      const selectedOptions = [];
+      document.querySelectorAll('[data-option-position]:checked').forEach(input => {
+        selectedOptions.push(input.value);
+      });
+      
+      const options = variantSelect.options;
+      for (let i = 0; i < options.length; i++) {
+        const optionTitle = options[i].text;
+        if (selectedOptions.every(opt => optionTitle.includes(opt))) {
+          variantSelect.selectedIndex = i;
+          break;
+        }
+      }
+    }
+    
+    optionInputs.forEach(input => {
+      input.addEventListener('change', updateVariant);
+    });
+
+    // Buy now
+    document.querySelector('[data-action="buy-now"]')?.addEventListener('click', function() {
+      const form = document.querySelector('form[action*="/cart/add"]');
+      if (form) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = 'checkout';
+        input.value = '';
+        form.appendChild(input);
+        form.action = '/cart/add';
+        form.submit();
+      }
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Template",
+  "settings": [
+    {
+      "type": "url",
+      "id": "product_video_url",
+      "label": "Product video URL",
+      "info": "Full-screen video at the top of the product page. Leave empty to hide. Can also be set per product via metafield 'custom.product_video'."
+    }
+  ]
+}
+{% endschema %}
