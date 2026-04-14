@@ -30,8 +30,8 @@
         "eyebrow": "Latest drop",
         "heading": "Featured selections",
         "collection": "summer-collection",
-        "products_to_show": 8,
-        "view_all_link": "/collections/all"
+        "products_to_show": 4,
+        "view_all_link": "shopify://collections/summer-collection"
       }
     },
     "lookbook-banner": {
