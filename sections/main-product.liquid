@@ -155,7 +155,7 @@
   </div>
   <div class="container">
     <div class="product-grid-vertical">
-      {% for related_product in product.collections.first.products limit: 4 %}
+      {% for related_product in product.collections.first.products limit: 12 %}
         {% if related_product.id != product.id %}
           {% render 'product-card', product: related_product %}
         {% endif %}
