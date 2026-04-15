@@ -11,8 +11,14 @@
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {}
+      "settings": {
+        "eyebrow": "Full catalog",
+        "heading": "Seasonless essentials, built like a drop.",
+        "description": "Explore our complete range of premium streetwear — from heavyweight tees to statement hoodies, every piece is crafted with intention."
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
