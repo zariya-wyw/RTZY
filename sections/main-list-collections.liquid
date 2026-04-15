@@ -16,7 +16,7 @@
       </div>
       <div class="container">
         <div class="product-slider">
-          {% for product in collection.products limit: 17 %}
+          {% for product in collection.products limit: 8 %}
             {% render 'product-card', product: product %}
           {% endfor %}
         </div>
