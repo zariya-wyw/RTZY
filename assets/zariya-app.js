@@ -261,7 +261,7 @@
     });
 
     window.addEventListener('resize', () => {
-      document.querySelectorAll('.product-grid').forEach(slider => {
+      document.querySelectorAll('.product-grid, .product-slider').forEach(slider => {
         if (slider.id) updateArrowVisibility(slider);
       });
     }, { passive: true });
