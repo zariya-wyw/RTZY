@@ -21,11 +21,33 @@
         </select>
       </label>
     </div>
-    <div id="collection-grid" class="product-grid product-grid-full">
-      {% for product in collection.products %}
-        {% render 'product-card', product: product %}
-      {% endfor %}
-    </div>
+    {% paginate collection.products by 48 %}
+      <div id="collection-grid" class="product-grid product-grid-full">
+        {% for product in collection.products %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+
+      {% if paginate.pages > 1 %}
+        <nav class="pagination" role="navigation" aria-label="Pagination">
+          {% if paginate.previous %}
+            <a href="{{ paginate.previous.url }}" aria-label="Previous page">&larr; Prev</a>
+          {% endif %}
+
+          {% for part in paginate.parts %}
+            {% if part.is_link %}
+              <a href="{{ part.url }}">{{ part.title }}</a>
+            {% else %}
+              <span class="{% if part.title == paginate.current_page %}current{% endif %}">{{ part.title }}</span>
+            {% endif %}
+          {% endfor %}
+
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }}" aria-label="Next page">Next &rarr;</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    {% endpaginate %}
   </div>
 </section>
 
